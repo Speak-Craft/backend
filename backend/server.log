@@ -1,0 +1,3 @@
+[dotenv@17.2.1] injecting env (4) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ MongoDB Connected
+🚀 Server running on port 3001
