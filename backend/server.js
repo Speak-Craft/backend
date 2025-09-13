@@ -18,11 +18,17 @@ app.use(cors({
 const authRoutes = require("./routes/authRoutes");
 const recordingRoutes = require("./routes/recordingRoutes");
 const saveRecRoutes = require("./routes/saveRecRoutes");
+const loudnessRoutes = require("./routes/loudnessRoutes");
+
+
+const topicRoutes = require('./routes/topicRoutes');
+app.use('/api/presentation', topicRoutes);
 
 
 app.use("/api/auth", authRoutes);
 app.use("/api/recording", recordingRoutes);
 app.use("/api/rec", saveRecRoutes);
+app.use("/api", loudnessRoutes);
 
 
 const PORT = process.env.PORT || 3001;
