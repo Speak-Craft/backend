@@ -7,6 +7,9 @@ const FormData = require("form-data");
 const { protect } = require("../middleware/authMiddleware");
 const Presentation = require("../models/Presentation");
 
+// Allow overriding the filler model service URL via env
+const FILLER_MODEL_URL = process.env.FILLER_MODEL_URL || "http://127.0.0.1:8000/predict-filler-words";
+
 // Save uploaded audio temporarily
 const upload = multer({ dest: "uploads/" });
 
@@ -20,8 +23,8 @@ router.post("/upload", protect, upload.single("audio"), async (req, res) => {
     const formData = new FormData();
     formData.append("audio", fs.createReadStream(req.file.path));
 
-    // ✅ Send audio to Flask model server
-    const flaskResponse = await axios.post("http://127.0.0.1:5001/predict", formData, {
+    // ✅ Send audio to model service (FastAPI on port 8000 by default)
+    const flaskResponse = await axios.post(FILLER_MODEL_URL, formData, {
       headers: formData.getHeaders(),
     });
 
