@@ -28,11 +28,21 @@ app.use('/api/presentation', topicRoutes);
 const presentationRoutes = require('./routes/presentationRoutes');
 app.use('/api/presentation', presentationRoutes);
 
+// Audience question generation routes
+const questionRoutes = require('./routes/questionRoutes');
+app.use('/api/questions', questionRoutes);
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/recording", recordingRoutes);
 app.use("/api/rec", saveRecRoutes);
 app.use("/api", loudnessRoutes);
+// Pace activities (rate/pause) persistence
+const paceRoutes = require('./routes/paceRoutes');
+app.use('/api', paceRoutes);
+// Filler word challenge routes
+const fillerwordRoutes = require('./routes/fillerwordRoutes');
+app.use('/api/challenge', fillerwordRoutes);
 
 
 const PORT = process.env.PORT || 3001;
