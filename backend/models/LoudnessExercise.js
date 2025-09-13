@@ -1,12 +1,18 @@
 const mongoose = require("mongoose");
 
-const loudnessPracticeSchema = new mongoose.Schema(
+const loudnessExerciseSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
       index: true,
+    },
+    level: {
+      type: Number,
+      default: 1,
+      min: 1,
+      max: 3,
     },
     duration: {
       type: Number,
@@ -26,16 +32,20 @@ const loudnessPracticeSchema = new mongoose.Schema(
     completed: {
       type: Boolean,
       default: false,
+      index: true,
     },
-    notes: {
-      type: String,
+    rmsSampleCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
 );
 
-loudnessPracticeSchema.index({ user: 1, createdAt: -1 });
+// Helpful compound indexes for queries
+loudnessExerciseSchema.index({ user: 1, createdAt: -1 });
+loudnessExerciseSchema.index({ user: 1, completed: 1, createdAt: -1 });
 
-module.exports = mongoose.model("LoudnessPractice", loudnessPracticeSchema);
+module.exports = mongoose.model("LoudnessExercise", loudnessExerciseSchema);
 
 

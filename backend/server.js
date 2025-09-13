@@ -24,6 +24,10 @@ const loudnessRoutes = require("./routes/loudnessRoutes");
 const topicRoutes = require('./routes/topicRoutes');
 app.use('/api/presentation', topicRoutes);
 
+// Presentation time segmentation routes (upload, list sessions)
+const presentationRoutes = require('./routes/presentationRoutes');
+app.use('/api/presentation', presentationRoutes);
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/recording", recordingRoutes);

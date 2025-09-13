@@ -10,6 +10,8 @@ const FillerWordsActivity = require('./FillerWordsActivity');
 const PaceManagementActivity = require('./PaceManagementActivity');
 const LoudnessActivity = require('./LoudnessActivity');
 const EmotionAnalysisActivity = require('./EmotionAnalysisActivity');
+const LoudnessExercise = require('./LoudnessExercise');
+const LoudnessScore = require('./LoudnessScore');
 
 module.exports = {
     User,
@@ -23,4 +25,6 @@ module.exports = {
     PaceManagementActivity,
     LoudnessActivity,
     EmotionAnalysisActivity
+    ,LoudnessExercise
+    ,LoudnessScore
 };
