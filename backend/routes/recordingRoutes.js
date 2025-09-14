@@ -28,8 +28,28 @@ router.post("/upload", protect, upload.single("audio"), async (req, res) => {
       headers: formData.getHeaders(),
     });
 
+    // ✅ Debug: Log the response from model service
+    console.log("Model service response:", JSON.stringify(flaskResponse.data, null, 2));
+
+    // ✅ Check if model service returned an error
+    if (flaskResponse.data.error) {
+      console.error("Model service error:", flaskResponse.data.error);
+      return res.status(500).json({ 
+        message: "Model analysis failed", 
+        error: flaskResponse.data.error 
+      });
+    }
+
     // ✅ Get filler prediction
     const fillerPrediction = flaskResponse.data.filler_prediction;
+    
+    // ✅ Validate filler prediction
+    if (fillerPrediction === undefined || fillerPrediction === null) {
+      console.error("No filler prediction returned from model service");
+      return res.status(500).json({ 
+        message: "No filler prediction returned from model service" 
+      });
+    }
 
     // ✅ Build audio path for DB
     const audioPath = `uploads/${req.file.filename}`;
