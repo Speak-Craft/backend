@@ -44,6 +44,9 @@ app.use('/api', paceRoutes);
 const fillerwordRoutes = require('./routes/fillerwordRoutes');
 app.use('/api/challenge', fillerwordRoutes);
 
+// Emotion analysis activity routes
+const emotionRoutes = require('./routes/emotionRoutes');
+app.use('/api', emotionRoutes);
 
 const PORT = process.env.PORT || 3001;
 mongoose.connect(process.env.MONGO_URI)
