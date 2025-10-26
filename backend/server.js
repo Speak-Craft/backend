@@ -21,6 +21,7 @@ const saveRecRoutes = require("./routes/saveRecRoutes");
 const loudnessRoutes = require("./routes/loudnessRoutes");
 
 
+
 const topicRoutes = require('./routes/topicRoutes');
 app.use('/api/presentation', topicRoutes);
 
@@ -47,6 +48,9 @@ app.use('/api/challenge', fillerwordRoutes);
 // Emotion analysis activity routes
 const emotionRoutes = require('./routes/emotionRoutes');
 app.use('/api', emotionRoutes);
+
+const feedbackRoutes = require("./routes/feedbackRoutes");
+app.use("/api/feedback", feedbackRoutes);
 
 const PORT = process.env.PORT || 3001;
 mongoose.connect(process.env.MONGO_URI)
