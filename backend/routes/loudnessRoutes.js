@@ -61,6 +61,37 @@ router.post("/exercises/loudness/update", protect, async (req, res) => {
   }
 });
 
+// Get user's level progress (highest completed level)
+router.get("/exercises/loudness/progress", protect, async (req, res) => {
+  try {
+    // Find all completed exercises for this user
+    const completedExercises = await LoudnessExercise.find({ 
+      user: req.user._id, 
+      completed: true 
+    }).sort({ level: -1 });
+    
+    // Determine highest completed level
+    const highestCompletedLevel = completedExercises.length > 0 
+      ? completedExercises[0].level 
+      : 0;
+    
+    // Calculate level statuses
+    const levelProgress = {
+      1: highestCompletedLevel >= 1 ? "completed" : "unlocked",
+      2: highestCompletedLevel >= 2 ? "completed" : (highestCompletedLevel >= 1 ? "unlocked" : "locked"),
+      3: highestCompletedLevel >= 3 ? "completed" : (highestCompletedLevel >= 2 ? "unlocked" : "locked")
+    };
+    
+    res.json({ 
+      highestCompletedLevel,
+      levelProgress,
+      nextLevel: highestCompletedLevel < 3 ? highestCompletedLevel + 1 : null
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch progress", error: err.message });
+  }
+});
+
 // Get my past exercises
 router.get("/exercises/my-exercises", protect, async (req, res) => {
   try {
